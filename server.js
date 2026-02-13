@@ -9,20 +9,33 @@ import productRoute from "./routes/productRoute.js"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 const app = express();
+
+const allowedOrigins = ['http://localhost:5173', 'https://shop-smart-frontend.vercel.app'];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
+
 
 //middlewares
 app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 //routes
 //user routes
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
   res.send("Welcome to the ShopSmart Ecommerce Site");
 })
 app.use('/user', authUser);
