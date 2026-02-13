@@ -22,6 +22,9 @@ app.use(cookieParser());
 
 //routes
 //user routes
+app.get("/", (req, res)=>{
+  res.send("Welcome to the ShopSmart Ecommerce Site");
+})
 app.use('/user', authUser);
 //admin routes
 app.use('/admin', Admin);
