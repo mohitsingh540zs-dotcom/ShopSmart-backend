@@ -12,7 +12,7 @@ import cookieParser from "cookie-parser";
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-const allowedOrigins = ['http://localhost:5173', 'https://shop-smart-frontend.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'https://shop-smart-frontend-nine.vercel.app'];
 
 const corsOptions = {
   origin: function (origin, callback) {
