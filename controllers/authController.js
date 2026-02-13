@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { verificationMail } from "../emailVerification/verification.js";
-import { SuccessMail } from "../emailVerification/SuccessMail.js";
+import { SuccessMail } from "../emailVerification/successMail.js";
 import { Session } from "../models/session.js";
 import { OtpMail } from "../emailVerification/otpMail.js";
 import { MaxAttempts, UserBlockedUntil } from "../config/Constrants.js";
