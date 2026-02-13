@@ -1,0 +1,30 @@
+# Dependency folders (Never upload these )
+node_modules/
+client/node_modules/
+server/node_modules/
+# Environment variable files (Never upload these )
+.env
+client/.env
+server/.env
+# Build output folders (Optional: if you have build scripts )
+dist/
+build/
+client/build/
+server/dist/
+# Logs (Optional)
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# OS generated files (Optional)
+.DS_Store
+Thumbs.db
+# IDE specific files (Optional)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
