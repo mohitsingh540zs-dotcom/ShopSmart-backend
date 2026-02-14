@@ -142,12 +142,43 @@ export const updateProduct = async (req, res) => {
             );
 
             for (let img of removedImages) {
-                await cloudinary.uploader.destroy(img.publicid);
+                await cloudinary.uploader.destroy(img.publicId);
             }
         }
-        else{
+        else {
             updatedImages = product.productImg //keep all if nothing sent
         }
+
+        //upload new images if any
+        if (req.files && req.files.length > 0) {
+            for (let file of req.files) {
+                const filesuri = getDataUri(file);
+                const result = await cloudinary.uploader.upload(fileuri, {
+                    folder: "mern_products"
+                });
+                updatedImages.push({
+                    url: result.secure_url,
+                    public_id: result.public_id
+                });
+            }
+        }
+
+        // update product
+
+        product.productName = productName || product.productName;
+        product.productDesc = productDesc || product.productDesc;
+        product.productPrice = productPrice || product.productPrice;
+        product.category = catetgory || product.category;
+        product.brand = brand || product.brand;
+        product.productImg = updatedImages
+
+        await product.save();
+
+        return res.status(200).json({
+            success:true,
+            message:"Product Updated Successfully",
+            product
+        });
 
     } catch (error) {
         return res.status(500).json({
