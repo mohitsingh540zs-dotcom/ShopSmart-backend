@@ -3,10 +3,8 @@ import { Users } from "../models/usersSchema.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import { verificationMail } from "../emailVerification/verification.js";
-import { SuccessMail } from "../emailVerification/successMail.js";
+import { verificationMail, otpMail, successMail } from "../services/emailService.js";
 import { Session } from "../models/session.js";
-import { OtpMail } from "../emailVerification/otpMail.js";
 import { MaxAttempts, UserBlockedUntil } from "../config/Constrants.js";
 import { refreshExpiry } from "../utils/refreshExpiry.js";
 import { generateOTP, getOtpExpiry } from "../utils/GenerateOtp.js"
@@ -130,7 +128,7 @@ export const verify = async (req, res) => {
         }
 
         try {
-            await SuccessMail(user.firstName, user.email);
+            await successMail(user.firstName, user.email);
         } catch (error) {
             console.log(error.message);
         }
@@ -361,7 +359,7 @@ export const forgotPassword = async (req, res) => {
         );
 
         // 8️ Send OTP email
-        await OtpMail(otp, email);
+        await otpMail(email, otp);
 
         return res.status(200).json({
             success: true,
@@ -540,7 +538,7 @@ export const resendOTP = async (req, res) => {
         await user.save();
 
         // 5. Send OTP email
-        await OtpMail(otp, email);
+        await otpMail(email, otp);
 
         return res.status(200).json({
             success: true,
