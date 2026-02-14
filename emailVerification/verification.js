@@ -6,7 +6,7 @@ export const verificationMail = async (email, token) => {
         const transporter = getTransporter();
 
         const mailOptions = {
-            from: `AuthSystem <${process.env.MAIL_USER}>`,
+            from: `"Shopsmart" <mohitsingh540zs@gmail.com>`,
             to: email,
             subject: 'Verification email',
             html: `<p>This is the verification link <br/> https://shop-smart-frontend-nine.vercel.app/verify/${token}</p>`
