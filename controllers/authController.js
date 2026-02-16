@@ -569,7 +569,7 @@ export const changePassword = async (req, res) => {
         const user = await Users.findOne({
             resetToken: hashedToken,
             resetTokenExpiry: { $gt: Date.now() }
-        });
+        }).select("+password");
 
         if (!user) {
             return res.status(400).json({
