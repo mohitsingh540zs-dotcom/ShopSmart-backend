@@ -277,12 +277,13 @@ export const login = async (req, res) => {
         //  remove sensitive fields before sending
         const { password: pwd, token, ...safeUser } = user._doc;
 
-        return res.status(200).cookie("refreshToken", refreshToken, {
+        const isProduction = process.env.NODE_ENV === "production";
+
+        res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
-            path: '/',
-            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+            secure: isProduction, // true on Render
+            sameSite: isProduction ? "None" : "Lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         }).json({
             success: true,
             message: `Login successful, welcome ${safeUser.firstName}`,
